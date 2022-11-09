@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mvvm_demo/utils/routes/routes.dart';
 import 'package:mvvm_demo/utils/routes/routes_name.dart';
 import 'package:mvvm_demo/view_model/auth_view_model.dart';
+import 'package:mvvm_demo/view_model/update_profile_view_model.dart';
 import 'package:mvvm_demo/view_model/user_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -19,8 +20,10 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => AuthViewModel()),
         ChangeNotifierProvider(create: (_) => UserViewModel()),
+        ChangeNotifierProvider(create: (_) => UpdateProfileViewModel()),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.blue,

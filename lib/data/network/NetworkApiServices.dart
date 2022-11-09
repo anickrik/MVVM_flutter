@@ -55,4 +55,38 @@ class NetworkApiServices extends BaseApiServices {
             'Error Occurred while communicating with server with status Code ${response.statusCode}');
     }
   }
+
+  @override
+  Future getPostMultiApiResponse(String url, image) async {
+    Map<String, String> headers = {
+      "x-api-token": "B4121C817C7E61869FEB4DE25E6A6",
+      "headerToken": "b6YmKSWn98UJZ2u0/pgNU8w8Ncdt69UNokY7eepliOU="
+    };
+    Map<String, String> body = {
+      'params': '{"firstName":"Kishann",'
+          '"lastName":"Chotaliya",'
+          '"email":"kishan@e2logy.com",'
+          '"mobileNumber":"0499999999"}',
+    };
+    http.MultipartFile multipartFile = await http.MultipartFile.fromPath(
+        'image', image.path);
+
+    dynamic responseJson;
+    try {
+      final multipartRequest = http.MultipartRequest("POST",Uri.parse(url));
+      multipartRequest.headers.addAll(headers);
+      multipartRequest.fields.addAll(body);
+      multipartRequest.files.add(multipartFile);
+      var response = await multipartRequest.send();
+      var responseData = await response.stream.toBytes();
+      var result = String.fromCharCodes(responseData);
+      print(result);
+      // multipartRequest.send().then((response) {
+      //   if (response.statusCode == 200) print("Uploaded!");
+      // });
+    } on SocketException {
+      throw FetchDataException('No Internet Connection');
+    }
+    return responseJson;
+  }
 }

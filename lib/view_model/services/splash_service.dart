@@ -8,17 +8,17 @@ import '../../model/UserModel.dart';
 class SplashService {
 
   Future<UserModel> getUserData() => UserViewModel().getUser();
-  void checkAuthentication(BuildContext context)async {
+  void checkAuthentication(BuildContext context) async{
     getUserData().then((value) async{
       if (kDebugMode) {
         // print('in splash service{$value.token}');
       }
       if(value.token == null || value.token == 'null'){
-        await Future.delayed(const Duration(seconds: 3));
-        Navigator.pushReplacementNamed(context, RouteName.signIn);
+        Future.delayed(const Duration(seconds: 3)).then((value) =>
+        Navigator.pushReplacementNamed(context, RouteName.signIn));
       }else {
-        await Future.delayed(const Duration(seconds: 3));
-        Navigator.pushReplacementNamed(context, RouteName.home);
+        await Future.delayed(const Duration(seconds: 3)).then((value) =>
+        Navigator.pushReplacementNamed(context, RouteName.home));
       }
     }).onError((error, stackTrace){
       if (kDebugMode) {

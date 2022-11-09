@@ -8,6 +8,9 @@ class AppUrl{
    static const String movieListUrl = "${movieBaseUrl}movies_list";
 
 
+   static const String updateProfileUrl = "https://qa.flashmarket.com.au/api/web/v1/update-profile";
+
+
 
    static var photoBaseUrl = "https://image.tmdb.org/t/p/w500";
 
@@ -22,6 +25,7 @@ class AppUrl{
    static var moviesUpComingMovie = '$moviesBaseUrl/upcoming?api_key=$apiKey';
 
    static var moviesTopRatedMovie = '$moviesBaseUrl/top_rated?api_key=$apiKey';
+
 
 
 }
