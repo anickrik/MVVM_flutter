@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -33,7 +34,10 @@ class _BodyState extends State<Body> {
           switch(value.moviesList.status){
             case Status.LOADING:
               return const Center(
-                child: CircularProgressIndicator(),
+                child: CupertinoActivityIndicator(
+                  radius: 20.0,
+                  color: Colors.black,
+                ),
               );
             case Status.ERROR:
               return Center(

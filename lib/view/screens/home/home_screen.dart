@@ -1,7 +1,13 @@
+import 'dart:async';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mvvm_demo/view/screens/home/components/body.dart';
 import 'package:mvvm_demo/view/screens/update_profile/components/update_profile_screen_body.dart';
 import 'package:provider/provider.dart';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 
 import 'package:mvvm_demo/utils/routes/routes_name.dart';
@@ -16,6 +22,54 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late  StreamSubscription subscription;
+  var isDeviceConnected = false;
+   bool isAlertSet = false;
+
+   @override
+  void initState() {
+    getConnectivity();
+    super.initState();
+  }
+
+  getConnectivity() =>
+    subscription = Connectivity().onConnectivityChanged.listen(
+        (ConnectivityResult result) async {
+          isDeviceConnected = await InternetConnectionChecker().hasConnection;
+          if(!isDeviceConnected && isAlertSet == false){
+            showDialogBox();
+            setState(() {
+              isAlertSet = true;
+            });
+          }
+        }
+    );
+
+   @override
+  void dispose() {
+     subscription.cancel();
+    super.dispose();
+  }
+
+  showDialogBox() => showCupertinoDialog<String>(
+      context: context,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: const Text("No Connection"),
+        content: const Text("Please Check Your Internet Connectivity"),
+        actions: [
+          TextButton(onPressed: () async {
+            Navigator.pop(context, 'Cancel');
+            setState(() => isAlertSet = false);
+            isDeviceConnected = await InternetConnectionChecker().hasConnection;
+            if(!isDeviceConnected){
+              showDialogBox();
+              setState(() => isAlertSet =true);
+            }
+
+          }, child: const Text("OK"))
+        ],
+      ),
+  );
 
 
   int _selectedIndex = 0;

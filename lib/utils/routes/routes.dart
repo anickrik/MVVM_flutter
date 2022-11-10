@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mvvm_demo/utils/routes/routes_name.dart';
+import 'package:mvvm_demo/view/screens/connection_checker/connection_checker_demo.dart';
 import 'package:mvvm_demo/view/screens/home/home_screen.dart';
 import 'package:mvvm_demo/view/screens/signin/sign_in_screen.dart';
 import 'package:mvvm_demo/view/screens/signup/sign_up_screen.dart';
@@ -19,6 +20,8 @@ class Routes {
         return MaterialPageRoute(builder: (BuildContext context) => const SignUpScreen());
         case RouteName.updateProfile:
         return MaterialPageRoute(builder: (BuildContext context) => const UpdateProfileScreen());
+        case RouteName.connectionChecker:
+        return MaterialPageRoute(builder: (BuildContext context) => const ConnectionCheckerDemo());
       default:
         return MaterialPageRoute(builder: (BuildContext context) => const HomeScreen());
     }

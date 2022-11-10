@@ -22,7 +22,7 @@ class _UpdateProfileScreenBodyState extends State<UpdateProfileScreenBody> {
 
   Future getImage(ImageSource source) async {
     try {
-      final image = await _picker.pickImage(source: source, imageQuality: 20);
+      final image = await _picker.pickImage(source: source);
       if (image == null) return;
       final imageTemp = File(image.path);
       setState(() {

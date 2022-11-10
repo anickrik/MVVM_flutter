@@ -18,6 +18,7 @@ class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController _passwordController = TextEditingController();
   FocusNode emailFocusNode = FocusNode();
   FocusNode passwordFocusNode = FocusNode();
+  bool isLoading = false;
 
   @override
   void dispose() {
@@ -35,6 +36,7 @@ class _SignInScreenState extends State<SignInScreen> {
     final authViewModel = Provider.of<AuthViewModel>(context);
     return Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: const Text("Sign In"),
           centerTitle: true,
         ),
@@ -76,7 +78,7 @@ class _SignInScreenState extends State<SignInScreen> {
               ),
               RoundButton(
                   title: "SignIn",
-                  isLoading: authViewModel.loading,
+                  isLoading: false,
                   onPress: () {
                     if (_emailController.text.isEmpty) {
                       Utils.flushBarErrorMessage("Please Enter Email", context);
@@ -88,6 +90,9 @@ class _SignInScreenState extends State<SignInScreen> {
                           "Please enter 8 or more Character As Password",
                           context);
                     } else {
+                      setState(() {
+                        isLoading = authViewModel.loading;
+                      });
                       print("signin");
                       Map data = {
                         'email': _emailController.text.trim().toString(),
@@ -105,7 +110,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   ),
                   TextButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, RouteName.signUp);
+                        Navigator.pushReplacementNamed(context, RouteName.signUp);
                       },
                       child: const Text("Sign Up"))
                 ],
@@ -115,3 +120,4 @@ class _SignInScreenState extends State<SignInScreen> {
         ));
   }
 }
+

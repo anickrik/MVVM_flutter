@@ -22,6 +22,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   FocusNode emailFocusNode = FocusNode();
   FocusNode passwordFocusNode = FocusNode();
 
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -39,6 +40,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     final authViewModel = Provider.of<AuthViewModel>(context);
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text("Sign Up"),
         centerTitle: true,
       ),
@@ -74,7 +76,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             RoundButton(
                 title: "Sign Up",
                 isLoading: authViewModel.signUpLoading,
-                onPress: (){
+                onPress: () async {
                   if(_emailController.text.isEmpty){
                     Utils.flushBarErrorMessage("Please Enter Email", context);
                   }else if(_passwordController.text.isEmpty){
@@ -82,6 +84,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   }else if(_passwordController.text.length < 8){
                     Utils.flushBarErrorMessage("Please enter 8 or more Character As Password", context);
                   }else{
+
+
                     print("Signup");
                     Map data = {
                       'email': _emailController.text.trim().toString(),
@@ -98,7 +102,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const Text("Already have An Account"),
                 const SizedBox(width: 10,),
                 TextButton(onPressed: (){
-                  Navigator.pushNamed(context, RouteName.signIn);
+                  Navigator.pushReplacementNamed(context, RouteName.signIn);
                 }, child: const Text("Sign In"))
               ],
             ),
@@ -108,4 +112,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
       )
     );
   }
+
+
 }
